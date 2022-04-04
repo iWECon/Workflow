@@ -7,7 +7,7 @@
 没错，只是用来减少变量名的定义而出现的这个库 ！！！🧐
 
 
-#### 使用说明
+# 使用说明
 
 Workflow 开始，然后 then 可以无限衔接，可在任意块中修改返回值给下一个 then 使用,
 
@@ -33,6 +33,16 @@ let intArray = try Workflow {
 print(intArray)
 ```
 
+# 支持 Concurrency
+
+```swift
+try await Workflow {
+    try await URLSession.shared.data(for: URLRequest)
+}.then { pair in 
+    pair.0 // Data
+    pair.1 // Response
+}
+```
 
 ## 安装
 
