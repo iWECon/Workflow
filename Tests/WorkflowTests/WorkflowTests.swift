@@ -7,17 +7,17 @@ final class WorkflowTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
         
-        let w1 = try Workflow {
+        let w1 = Workflow {
             "Workflow"
-        }.then {
+        }.map {
             $0 + " yes!"
-        }.value
+        }.end()
         
         XCTAssertEqual(w1, "Workflow yes!")
         
-        try Workflow {
+        Workflow {
             "Workflow"
-        }.then {
+        }.map {
             $0 + " yes!"
         }.end {
             XCTAssertEqual($0, "Workflow yes!")
@@ -29,7 +29,7 @@ final class WorkflowTests: XCTestCase {
         
         try await Workflow {
             try await URLSession.shared.data(for: URLRequest(url: URL(string: "https://www.google.com/ncr")!))
-        }.then({ pair in
+        }.map({ pair in
             pair.0.isEmpty
         }).end({ value in
             XCTAssertEqual(value, false)
